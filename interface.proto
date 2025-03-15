@@ -1,0 +1,21 @@
+/* 
+ * Copyright (C) Rogue LLC - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Written by Jacob Bartholomew Blankenship [jacob.blankenship@roguedb.com] - January 2022
+ */
+
+syntax = "proto3";
+
+import "queries.proto";
+
+package Rogue.Services;
+
+service Interface
+{
+	rpc insert(Insert) returns(Response) {}
+	rpc search(Search) returns(Response) {}
+    rpc update(Update) returns(Response) {}
+    rpc remove(Remove) returns(Response) {}
+
+    rpc pause(Access) returns(Response) {}
+}

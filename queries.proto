@@ -1,0 +1,120 @@
+/* 
+ * Copyright (C) Rogue LLC - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Written by Jacob Bartholomew Blankenship [jacob.blankenship@roguedb.com] - January 2022
+ */
+
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "user.proto";
+
+package Rogue.Services;
+
+message Payload
+{
+    repeated google.protobuf.Any messages = 2;
+}
+
+message Update
+{
+    string api_key = 1;
+    repeated Payload data = 2;
+}
+
+message Remove
+{
+    string api_key = 1;
+    repeated Payload data = 2;
+}
+
+message Insert
+{
+    string api_key = 1;
+    repeated Payload data = 2;
+}
+
+message Response
+{
+    repeated string error_details = 1;
+    repeated Payload payloads = 2;
+}
+
+enum LogicalOperator
+{
+    LOGICAL_OPERATOR_UNKNOWN = 0;
+    AND = 1;
+    AND_NOT = 2;
+    OR = 3;
+    OR_NOT = 4;
+    NAND = 5;
+    NOR = 6;
+}
+enum ComparisonOperator
+{
+    COMPARISON_OPERATOR_UNKNOWN = 0;
+    EQUAL = 1;
+    NOT_EQUAL = 2;
+    LESSER = 3;
+    LESSER_EQUAL = 4;
+    GREATER = 5;
+    GREATER_EQUAL = 6;
+}
+
+// Basic: Test.attribute_1 < 10
+// Basic: Test.attribute_1 < 10 and Test.attribute_2 > 5
+// Complex: (Test.attribute_1 < 10 and Test.attribute_2 > 5) or Test.attribute_3 == true
+message Expression
+{
+    oneof expression
+    {
+        BaseExpression base_expression = 1;
+        ComplexExpression complex_expression = 2;
+    }
+}
+
+message ComplexExpression
+{
+    repeated LogicalOperator logical_operators = 1;
+    repeated Expression expressions = 2;
+}
+
+message BaseExpression
+{
+    LogicalOperator logical_operator = 1;
+    repeated ComparisonOperator comparison_operators = 2;
+    repeated google.protobuf.Any operands = 3;
+    repeated int32 operand_fields = 4;
+}
+
+message Search
+{
+    string api_key = 1;
+    repeated Expression queries = 2;
+}
+
+enum Source
+{
+    UNCOMPATIBLE = 0;
+    PROTO = 1;
+    JSON = 2;
+    CSV = 3;
+}
+
+message Schema
+{
+    Source source = 1;
+    string filename = 2;
+    string contents = 3;
+}
+
+message Subscribe
+{
+    string api_key = 1;
+    repeated Schema schemas = 2;
+}
+
+message Access
+{
+    string api_key = 1;
+}
