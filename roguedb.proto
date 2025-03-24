@@ -6,7 +6,7 @@
 
 syntax = "proto3";
 
-import "roguedb/data_schemas/queries.proto";
+import "queries.proto";
 
 package Rogue.Services;
 
