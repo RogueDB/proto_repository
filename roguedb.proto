@@ -6,16 +6,20 @@
 
 syntax = "proto3";
 
-import "queries.proto";
+import "roguedb/data_schemas/queries.proto";
 
 package Rogue.Services;
 
-service Interface
+service RogueDB
 {
-	rpc insert(Insert) returns(Response) {}
+    rpc subscribe(Subscribe) returns(Response) {}
+    
+    rpc insert(Insert) returns(Response) {}
 	rpc search(Search) returns(Response) {}
     rpc update(Update) returns(Response) {}
     rpc remove(Remove) returns(Response) {}
 
-    rpc pause(Access) returns(Response) {}
+    rpc reset(Subscribe) returns(Response) {}
+    rpc clear(Credentials) returns(Response) {}
+    rpc nuke(Credentials) returns(Response) {}
 }

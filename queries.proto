@@ -7,9 +7,14 @@
 syntax = "proto3";
 
 import "google/protobuf/any.proto";
-import "user.proto";
 
 package Rogue.Services;
+
+message Credentials
+{
+    string identifier = 1; // index-1
+    string api_key = 2; // index-2
+}
 
 message Payload
 {
@@ -18,19 +23,19 @@ message Payload
 
 message Update
 {
-    string api_key = 1;
+    Credentials credentials = 1;
     repeated Payload data = 2;
 }
 
 message Remove
 {
-    string api_key = 1;
+    Credentials credentials = 1;
     repeated Payload data = 2;
 }
 
 message Insert
 {
-    string api_key = 1;
+    Credentials credentials = 1;
     repeated Payload data = 2;
 }
 
@@ -89,7 +94,7 @@ message BaseExpression
 
 message Search
 {
-    string api_key = 1;
+    Credentials credentials = 1;
     repeated Expression queries = 2;
 }
 
@@ -110,11 +115,6 @@ message Schema
 
 message Subscribe
 {
-    string api_key = 1;
+    Credentials credentials = 1;
     repeated Schema schemas = 2;
-}
-
-message Access
-{
-    string api_key = 1;
 }
